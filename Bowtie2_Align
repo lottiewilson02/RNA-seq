@@ -66,7 +66,7 @@ do
         --fr \
         -p 8 \
         -x $refdir/SPECIES.GENOME.INDEX.fa \
-        -1 $workingdir/trimmed_reads${i}_fp1.fastq.gz \
+        -1 $workingdir/trimmed_reads/${i}_fp1.fastq.gz \
         -2 $workingdir/trimmed_reads/${i}_fp2.fastq.gz \
         -S $workingdir/bowtie/${i}.sam
 
