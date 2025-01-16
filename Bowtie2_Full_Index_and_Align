@@ -46,10 +46,14 @@ export workingdir=/your/working/dir
 # Main CMD
 #################################################################################
 
+echo "indexing running"
+
 ## Index the genome for quicker access by bowtie2 during alignment
 bowtie2-build \
     $refdir/SPECIES_GENOME.dna.toplevel.fa\
     $refdir/SPECIES_GENOME.INDEX.fa
+
+echo "indexing complete"
 
 ## List of sequences to map to indexed reference genome
 list=(
@@ -68,7 +72,7 @@ do
         --maxins 500 \
         --fr \
         -p 8 \
-        -x $refdir/SPECIES.GENOME.INDEX.fa \
+        -x $refdir/variety_index.fasta \
         -1 $workingdir/trimmed_reads${i}_fp1.fastq.gz \
         -2 $workingdir/trimmed_reads/${i}_fp2.fastq.gz \
         -S $workingdir/bowtie/${i}.sam
