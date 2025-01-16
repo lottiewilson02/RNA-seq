@@ -11,14 +11,14 @@
 
 
 ## Load some modules
-module load  STAR/2.7.3a
+module load  STAR/2.7.6a
 
 
 ## Point to directory containing the reference genome where your sequences will map
-export refdir=/mnt/scratch/charlotte/ref_annotations
+export refdir=/mnt/scratch45/c21010903/jumble
 
 ## Declare your working directory
-export workingdir=/mnt/scratch/charlotte 
+export workingdir=/mnt/scratch45/c21010903 
 
 
 ## The commands you want to run
@@ -28,11 +28,10 @@ STAR    --runThreadN ${SLURM_CPUS_PER_TASK} \
         --limitGenomeGenerateRAM 31000000000 \
         --runMode genomeGenerate \
         --genomeDir  $refdir/ \
-        --genomeFastaFiles $refdir/Ri_Jo.fasta \
-        --sjdbGTFfile $refdir/Ri_Jo.gff3 \
-        --sjdbGTFtagExonParentTranscript Parent= \
-        --sjdbGTFtagExonParentGene transcript_id= \
-        --sjdbGTFtagExonParentGene gene_id= \
+        --genomeFastaFiles $refdir/Ri_AB.fasta \
+        --sjdbGTFfile $refdir/Ri_AB.gff3 \
+        --sjdbGTFfeatureExon exon \
+        --sjdbGTFtagExonParentTranscript Parent \
         --sjdbOverhang 129 \
         --genomeSAindexNbases 13
 
@@ -59,3 +58,7 @@ list=("HT-64" "HT-63" "HT-62" "WA-61" "WA-60" "WA-59")
       # --quantMode GeneCounts \
        #--outFileNamePrefix $workingdir/star/${i}_unsort. \
        #--genomeDir $refdir \
+        #--readFilesIn $workingdir/trimmed_reads/${i}_fp1.fastq.gz $workingdir/trimmed_reads/${i}_fp2.fastq.gz \
+        #--readFilesCommand zcat
+
+#done
