@@ -41,24 +41,24 @@ STAR    --runThreadN ${SLURM_CPUS_PER_TASK} \
 list=("HT-64" "HT-63" "HT-62" "WA-61" "WA-60" "WA-59")
 
 # Create a new directory to store alignment files
-#mkdir star
+mkdir star
 
 # Map forward and reverse reads to indexed genome
 
-#for i in ${list[@]}
+for i in ${list[@]}
 
 #do
-#        echo ${i}
+        echo ${i}
 
- #       STAR   --outMultimapperOrder Random \
-  #     --outSAMmultNmax 1 \
-   #    --runThreadN ${SLURM_CPUS_PER_TASK}  \
-    #   --runMode alignReads \
-     #  --outSAMtype BAM Unsorted \
-      # --quantMode GeneCounts \
-       #--outFileNamePrefix $workingdir/star/${i}_unsort. \
-       #--genomeDir $refdir \
-        #--readFilesIn $workingdir/trimmed_reads/${i}_fp1.fastq.gz $workingdir/trimmed_reads/${i}_fp2.fastq.gz \
-        #--readFilesCommand zcat
+        STAR   --outMultimapperOrder Random \
+        --outSAMmultNmax 1 \
+        --runThreadN ${SLURM_CPUS_PER_TASK}  \
+        --runMode alignReads \
+        --outSAMtype BAM Unsorted \
+        --quantMode GeneCounts \
+        --outFileNamePrefix $workingdir/star/${i}_unsort. \
+        --genomeDir $refdir \
+        --readFilesIn $workingdir/trimmed_reads/${i}_fp1.fastq.gz $workingdir/trimmed_reads/${i}_fp2.fastq.gz \
+        --readFilesCommand zcat
 
-#done
+done
