@@ -1,0 +1,48 @@
+#!/bin/bash
+#SBATCH --partition=defq       # the requested queue
+#SBATCH --nodes=1              # number of nodes to use
+#SBATCH --tasks-per-node=1     # for parallel distributed jobs
+#SBATCH --cpus-per-task=4      # for multi-threaded jobs
+#SBATCH --mem-per-cpu=4G      # in megabytes, unless unit explicitly stated
+#SBATCH --error=logs/%J.err         # redirect stderr to this file
+#SBATCH --output=logs/%J.out        # redirect stdout to this file
+#SBATCH --mail-user=wilsoncl6@cardiff.ac.uk	# email
+#SBATCH --mail-type=BEGIN,END,FAIL	# email on job start, end, and/or failure
+
+
+#QC 4 loop script
+
+echo "Usable Environment Variables:"
+echo "============================="
+echo "hostname=$(hostname)"
+echo \$SLURM_JOB_ID=${SLURM_JOB_ID}
+echo \$SLURM_NTASKS=${SLURM_NTASKS}
+echo \$SLURM_NTASKS_PER_NODE=${SLURM_NTASKS_PER_NODE}
+echo \$SLURM_CPUS_PER_TASK=${SLURM_CPUS_PER_TASK}
+echo \$SLURM_JOB_CPUS_PER_NODE=${SLURM_JOB_CPUS_PER_NODE}
+echo \$SLURM_MEM_PER_CPU=${SLURM_MEM_PER_CPU}
+
+## Load some Modules
+module load fastqc/v0.11.9
+module load multiqc/1.9
+
+## Set up working directory
+export workingdir=/mnt/scratch45/c21010903/GlenTrimmed/
+
+## The commands you want to run
+
+# List of sequences
+list=("GA-S2" "GA-S6" "GA-S13" "GD-S8" "GD-S21" "GD-S31")
+
+# fastqc the raw data (assuming PE data)
+for i in ${list[@]}
+do
+	echo ${i}
+	
+	fastqc $workingdir/fastp_output/${i}_fp1.fastq.gz
+	fastqc $workingdir/fastp_output/${i}_fp2.fastq.gz
+
+done
+
+# Summarize QC data of raw sequences
+multiqc -i "Glen_multiqc_of_fastp" $workingdir/
