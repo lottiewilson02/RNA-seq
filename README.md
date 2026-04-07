@@ -1,2 +1,2 @@
 # Genome mapping scripts
-Scripts used for genome mapping - RP1 focus
+RNA-seq analysis, quality assessment and identification of reference genomes, prelim work for construction of genomic network
