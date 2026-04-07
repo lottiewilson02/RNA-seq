@@ -30,11 +30,11 @@ echo \$SLURM_MEM_PER_CPU=${SLURM_MEM_PER_CPU}
 module load subread/2.0.6-abbqxcc
 
 #export the reference directory
-export $refdir=/mnt/scratch45/c21010903/jumble
+export refdir=/mnt/scratch45/c21010903/
 
 # define the working directory
 
-export $workingdir=/mnt/scratch45/c21010903
+export workingdir=/mnt/scratch45/c21010903/HTWA_MJ_featCounts
 
 ##REMEMBER: set up any directories that the software needs in this script in case 
 ##it is unable to do so itself
@@ -65,11 +65,11 @@ do
                 -T ${SLURM_CPUS_PER_TASK} \
                 -p \
                 -F GTF \
-                -t exon \
+                -t gene \
                 -g ID \
-                -a $refdir/Ri_AB.gff \
-                -o $workingdir/featureCounts/${i}.markdup.featurecount \
-                $workingdir/markdup/RiAB_markdup/${i}.markdup.bam
+                -a $refdir/Ri_MJ.gff \
+                -o $workingdir/${i}.markdup.featurecount \
+                $workingdir/${i}.markdup.bam
 
     echo ${i} "markdup FC = complete"
 

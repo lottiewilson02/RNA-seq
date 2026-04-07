@@ -6,12 +6,11 @@
 #SBATCH --mem-per-cpu=4G      # in megabytes, unless unit explicitly stated
 #SBATCH --error=logs/%J.err         # redirect stderr to this file
 #SBATCH --output=logs/%J.out        # redirect stdout to this file
-#SBATCH --mail-user=wilsoncl6@cardiff.ac.uk     # email
-#SBATCH --mail-type=BEGIN,END,FAIL      # email on job start, end, and/or failure
+#SBATCH --mail-user=wilsoncl6@cardiff.ac.uk	# email
+#SBATCH --mail-type=BEGIN,END,FAIL	# email on job start, end, and/or failure
 
 
 #QC 4 loop script
-#Heritage and wakefield 59-64 samples
 
 echo "Usable Environment Variables:"
 echo "============================="
@@ -28,22 +27,22 @@ module load fastqc/v0.11.9
 module load multiqc/1.9
 
 ## Set up working directory
-export workingdir=/mnt/scratch/charlotte/trimmed/
+export workingdir=/mnt/scratch45/c21010903/GlenTrimmed/
 
 ## The commands you want to run
 
 # List of sequences
-list=("HT-64" "HT-63" "HT-62" "WA-61" "WA-60" "WA-59")
+list=("GA-S2" "GA-S6" "GA-S13" "GD-S8" "GD-S21" "GD-S31")
 
 # fastqc the raw data (assuming PE data)
 for i in ${list[@]}
 do
-        echo ${i}
-        
-        fastqc $workingdir/${i}_fp1.fastq.gz
-        fastqc $workingdir/${i}_fp2.fastq.gz
+	echo ${i}
+	
+	fastqc $workingdir/fastp_output/${i}_fp1.fastq.gz
+	fastqc $workingdir/fastp_output/${i}_fp2.fastq.gz
 
 done
 
 # Summarize QC data of raw sequences
-multiqc -i "WA_HT_AxBud_fastp_qc" $workingdir/
+multiqc -i "Glen_multiqc_of_fastp" $workingdir/
